@@ -8,6 +8,7 @@ defmodule EcommerceCourse.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      EcommerceCourse.PromEx,
       # Start the Ecto repository
       EcommerceCourse.Repo,
       # Start the Telemetry supervisor
