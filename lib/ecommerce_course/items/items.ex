@@ -25,6 +25,27 @@ defmodule EcommerceCourse.Items do
     |> Repo.all()
   end
 
+  def get_items_by_stream() do
+    {:ok, items} =
+      Repo.transaction(fn ->
+        Item
+        |> Repo.stream()
+        |> Stream.map(&format_item/1)
+        |> Enum.to_list()
+      end)
+
+    items
+  end
+
+  defp format_item(item) do
+    %{
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      sku: item.sku
+    }
+  end
+
   @doc """
   Gets a single item.
 
