@@ -48,12 +48,15 @@ defmodule EcommerceCourse.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
+      {:plug_cowboy, "~> 2.5.1"},
       {:guardian, "~> 2.0"},
       {:csv, "~> 3.0"},
       {:telemetry_metrics_statsd, "~> 0.6.0"},
       {:xprof, "~> 2.0.0-rc.5"},
-      {:flame_on, "~> 0.5.2"}
+      {:flame_on, "~> 0.5.2"},
+      {:finch, "~> 0.10.2"},
+      {:telemetry, "~> 1.0", override: true},
+      {:prom_ex, "~> 1.7.1"}
     ]
   end
 
