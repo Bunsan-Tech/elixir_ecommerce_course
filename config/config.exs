@@ -47,6 +47,15 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Guardian config
+config :ecommerce_course, EcommerceCourse.Guardian,
+  issuer: "ecommerce_course",
+  secret_key: "kEkHu5w3SCNN8c1BXAHNxx0lpCpBQyyWl08Yl1LMPwEyWArVWdExbBaUSk1HNiUo"
+
+config :ecommerce_course, EcommerceCourse.AuthAccessPipeline,
+  module: EcommerceCourse.Guardian,
+  error_handler: EcommerceCourse.AuthErrorHandler
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
