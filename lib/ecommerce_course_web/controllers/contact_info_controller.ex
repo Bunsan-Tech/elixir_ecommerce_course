@@ -7,7 +7,7 @@ defmodule EcommerceCourseWeb.ContactInfoController do
   action_fallback EcommerceCourseWeb.FallbackController
 
   def create(conn, %{"contact_info" => contact_info_params}) do
-    with {:ok, %ContactInfo{} = contact_info} <-
+    with {:ok, %{contact_info: contact_info}} <-
            Orders.create_contact_info(contact_info_params) do
       conn
       |> put_status(:created)

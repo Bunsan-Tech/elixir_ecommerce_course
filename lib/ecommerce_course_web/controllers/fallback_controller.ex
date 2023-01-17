@@ -42,9 +42,6 @@ defmodule EcommerceCourseWeb.FallbackController do
   end
 
   def call(conn, fallback) do
-    require IEx
-    IEx.pry()
-
     conn
     |> put_status(:unprocessable_entity)
     |> put_view(EcommerceCourseWeb.ErrorView)

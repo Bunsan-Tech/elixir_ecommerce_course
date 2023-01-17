@@ -4,6 +4,7 @@ defmodule EcommerceCourse.Orders do
   """
 
   import Ecto.Query, warn: false
+  alias EcommerceCourse.Utils
   alias EcommerceCourse.Repo
   alias EcommerceCourse.Orders.{ContactInfo, Order}
 
@@ -48,7 +49,9 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_order(attrs \\ %{}) do
+  def create_order(attrs \\ %{}, _payment_info) do
+    attrs = Utils.transform_string_map(attrs)
+
     attrs
     |> Order.create_changeset()
     |> Repo.insert()

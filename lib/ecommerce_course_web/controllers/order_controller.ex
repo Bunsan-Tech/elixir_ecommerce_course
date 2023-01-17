@@ -11,11 +11,11 @@ defmodule EcommerceCourseWeb.OrderController do
     render(conn, "index.json", orders: orders)
   end
 
-  def create(conn, %{"order" => order_params}) do
+  def create(conn, %{"order" => order_params, "payment_info" => payment_info_params}) do
     user = conn.private.guardian_default_resource
     order_params = Map.put(order_params, "user_id", user.id)
 
-    with {:ok, %Order{} = order} <- Orders.create_order(order_params) do
+    with {:ok, %Order{} = order} <- Orders.create_order(order_params, payment_info_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.order_path(conn, :show, order))
