@@ -52,7 +52,8 @@ defmodule EcommerceCourse.MixProject do
       {:guardian, "~> 2.0"},
       {:csv, "~> 3.0"},
       {:telemetry_metrics_statsd, "~> 0.6.0"},
-      {:xprof, "~> 2.0.0-rc.5"}
+      {:xprof, "~> 2.0.0-rc.5"},
+      {:flame_on, "~> 0.5.2"}
     ]
   end
 

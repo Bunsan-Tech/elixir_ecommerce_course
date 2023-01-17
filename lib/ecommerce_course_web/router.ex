@@ -61,7 +61,11 @@ defmodule EcommerceCourseWeb.Router do
     scope "/" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: EcommerceCourseWeb.Telemetry
+      live_dashboard "/dashboard",
+        metrics: EcommerceCourseWeb.Telemetry,
+        additional_pages: [
+          flame_on: FlameOn.DashboardPage
+        ]
     end
   end
 
