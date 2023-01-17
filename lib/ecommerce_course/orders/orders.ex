@@ -4,9 +4,13 @@ defmodule EcommerceCourse.Orders do
   """
 
   import Ecto.Query, warn: false
-  alias EcommerceCourse.Utils
+  alias Ecto.Multi
   alias EcommerceCourse.Repo
+
+  alias EcommerceCourse.Utils
   alias EcommerceCourse.Orders.{ContactInfo, Order}
+  alias EcommerceCourse.Checkout
+  alias EcommerceCourse.Addresses.Address
 
   @doc """
   Returns the list of orders.
@@ -49,12 +53,15 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_order(attrs \\ %{}, _payment_info) do
+  def create_order(attrs \\ %{}, payment_info_params) do
+    payment_info = Utils.transform_string_map(payment_info_params)
     attrs = Utils.transform_string_map(attrs)
 
     attrs
     |> Order.create_changeset()
-    |> Repo.insert()
+    |> Repo.insert!()
+    |> Repo.preload([:user, :contact_info, [cart: :items]])
+    |> Checkout.submit_order(payment_info)
   end
 
   @doc """
@@ -132,10 +139,26 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_contact_info(attrs \\ %{}) do
-    attrs
-    |> ContactInfo.create_changeset()
-    |> Repo.insert()
+  def create_contact_info(attrs \\ %{}, user) do
+    attrs = Utils.transform_string_map(attrs)
+    address = Map.put(attrs.address, :user_id, user.id)
+
+    Multi.new()
+    |> Multi.insert(:address, Address.create_changeset(address))
+    |> Multi.insert(:contact_info, fn %{address: address} ->
+      contact_info = contact_info_structure(attrs, address)
+
+      ContactInfo.create_changeset(contact_info)
+    end)
+    |> Repo.transaction()
+  end
+
+  defp contact_info_structure(%{phone: phone, email: email}, %{id: address_id}) do
+    %{
+      phone: phone,
+      email: email,
+      address_id: address_id
+    }
   end
 
   @doc """

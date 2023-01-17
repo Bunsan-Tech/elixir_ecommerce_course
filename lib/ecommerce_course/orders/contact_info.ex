@@ -7,6 +7,7 @@ defmodule EcommerceCourse.Orders.ContactInfo do
   @fields ~w(email phone address_id)a
   @email_address_regex ~r/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
 
+  @foreign_key_type Ecto.UUID
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "contact_info" do
     field :email, :string

@@ -13,7 +13,7 @@ defmodule EcommerceCourseWeb.OrderView do
   def render("order.json", %{order: order}) do
     %{
       id: order.id,
-      price: order.price,
+      price: inspect(order.price),
       status: order.status,
       location: order.location,
       delivery_date: order.delivery_date,

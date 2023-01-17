@@ -18,8 +18,7 @@ defmodule EcommerceCourseWeb.ItemView do
       price: item.price,
       description: item.description,
       image: item.image,
-      sku: item.sku,
-      inventory_updated_add: item.inventory_updated_add
+      sku: item.sku
     }
   end
 end

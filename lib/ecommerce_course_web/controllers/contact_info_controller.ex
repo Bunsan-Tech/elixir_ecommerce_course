@@ -7,8 +7,10 @@ defmodule EcommerceCourseWeb.ContactInfoController do
   action_fallback EcommerceCourseWeb.FallbackController
 
   def create(conn, %{"contact_info" => contact_info_params}) do
+    user = conn.private.guardian_default_resource
+
     with {:ok, %{contact_info: contact_info}} <-
-           Orders.create_contact_info(contact_info_params) do
+           Orders.create_contact_info(contact_info_params, user) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.contact_info_path(conn, :show, contact_info))

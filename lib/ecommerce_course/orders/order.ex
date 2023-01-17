@@ -6,7 +6,7 @@ defmodule EcommerceCourse.Orders.Order do
   alias EcommerceCourse.Carts.Cart
   alias EcommerceCourse.Orders.{ContactInfo, PaymentInfo}
 
-  @required_fields ~w(location)a
+  @required_fields ~w(location contact_info_id user_id cart_id)a
   @optional_fields ~w(delivery_date status price)a
 
   @foreign_key_type Ecto.UUID

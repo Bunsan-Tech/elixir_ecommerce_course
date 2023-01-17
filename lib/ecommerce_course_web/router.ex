@@ -39,6 +39,7 @@ defmodule EcommerceCourseWeb.Router do
     resources("/orders", OrderController, except: [:new, :edit])
     resources "/contact_info", ContactInfoController, except: [:index, :new, :edit]
     resources "/carts", CartController, except: [:index, :new, :edit, :update]
+    post "/cart_items", CartController, :add_cart_items
   end
 
   # Other scopes may use custom stacks.
