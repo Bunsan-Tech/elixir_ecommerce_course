@@ -50,7 +50,8 @@ defmodule EcommerceCourse.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:guardian, "~> 2.0"},
-      {:csv, "~> 3.0"}
+      {:csv, "~> 3.0"},
+      {:telemetry_metrics_statsd, "~> 0.6.0"}
     ]
   end
 
