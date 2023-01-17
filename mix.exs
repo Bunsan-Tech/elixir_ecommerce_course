@@ -51,7 +51,8 @@ defmodule EcommerceCourse.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:guardian, "~> 2.0"},
       {:csv, "~> 3.0"},
-      {:telemetry_metrics_statsd, "~> 0.6.0"}
+      {:telemetry_metrics_statsd, "~> 0.6.0"},
+      {:xprof, "~> 2.0.0-rc.5"}
     ]
   end
 
