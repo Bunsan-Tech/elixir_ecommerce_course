@@ -9,6 +9,10 @@ defmodule EcommerceCourse.Utils do
     end)
   end
 
+  defp transfom_value(value) when is_struct(value) do
+    value
+  end
+
   defp transfom_value(value) when is_map(value) do
     transform_string_map(value)
   end
