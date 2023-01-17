@@ -11,9 +11,10 @@ defmodule EcommerceCourseWeb.Telemetry do
     children = [
       # Telemetry poller will execute the given period measurements
       # every 10_000ms. Learn more here: https://hexdocs.pm/telemetry_metrics
-      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000}
+      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000},
       # Add reporters as children of your supervision tree.
       # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
+      {TelemetryMetricsStatsd, metrics: metrics(), formatter: :datadog}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
@@ -28,6 +29,11 @@ defmodule EcommerceCourseWeb.Telemetry do
       summary("phoenix.router_dispatch.stop.duration",
         tags: [:route],
         unit: {:native, :millisecond}
+      ),
+      # Phoenix metric but custom
+      summary("phoenix.request.duration",
+        unit: {:native, :millisecond},
+        tags: [:request_path]
       ),
 
       # Database Metrics
@@ -57,7 +63,13 @@ defmodule EcommerceCourseWeb.Telemetry do
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),
       summary("vm.total_run_queue_lengths.cpu"),
-      summary("vm.total_run_queue_lengths.io")
+      summary("vm.total_run_queue_lengths.io"),
+
+      # Custom metrics
+      counter("http.request.stop.duration"),
+      counter("ecommerce_course.orders.create_order.count",
+        description: "Count every order call"
+      )
     ]
   end
 
