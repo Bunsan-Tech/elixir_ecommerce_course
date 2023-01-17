@@ -21,4 +21,10 @@ defmodule EcommerceCourseWeb.ItemView do
       sku: item.sku
     }
   end
+
+  def render("streams.json", %{items: items}) do
+    %{data: render_many(items, ItemView, "stream.json")}
+  end
+
+  def render("stream.json", %{item: item}), do: item
 end

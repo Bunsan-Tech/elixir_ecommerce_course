@@ -7,11 +7,7 @@ defmodule EcommerceCourseWeb.ItemController do
   action_fallback EcommerceCourseWeb.FallbackController
 
   def index(conn, _params) do
-    start = System.monotonic_time()
     items = Items.available_items()
-    :telemetry.execute([:phoenix, :request], %{duration: System.monotonic_time() - start}, conn)
-    :telemetry.execute([:http, :request, :stop], %{duration: System.monotonic_time() - start})
-
     render(conn, "index.json", items: items)
   end
 
@@ -27,6 +23,11 @@ defmodule EcommerceCourseWeb.ItemController do
   def show(conn, %{"id" => id}) do
     item = Items.get_item!(id)
     render(conn, "show.json", item: item)
+  end
+
+  def show_by_stream(conn, _params) do
+    items = Items.get_items_by_stream()
+    render(conn, "streams.json", items: items)
   end
 
   def update(conn, %{"id" => id, "item" => item_params}) do

@@ -35,6 +35,7 @@ defmodule EcommerceCourseWeb.Router do
     pipe_through([:api, :maybe_browser_auth])
 
     resources("/items", ItemController, except: [:new, :edit])
+    get "/items_by_stream", ItemController, :show_by_stream
     resources("/users", UserController, except: [:new, :edit])
     resources("/orders", OrderController, except: [:new, :edit])
     resources "/contact_info", ContactInfoController, except: [:index, :new, :edit]
