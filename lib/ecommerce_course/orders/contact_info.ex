@@ -2,13 +2,17 @@ defmodule EcommerceCourse.Orders.ContactInfo do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @fields ~w(email phone)a
+  alias EcommerceCourse.Addresses.Address
+
+  @fields ~w(email phone address_id)a
   @email_address_regex ~r/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "contact_info" do
     field :email, :string
     field :phone, :string
+
+    belongs_to :address, Address
 
     timestamps()
   end

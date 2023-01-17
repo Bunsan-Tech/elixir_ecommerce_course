@@ -2,9 +2,12 @@ defmodule EcommerceCourse.Addresses.Address do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_fields ~w(country_code postal_code street neighborhood)a
+  alias EcommerceCourse.Users.User
+
+  @required_fields ~w(country_code postal_code street neighborhood user_id)a
   @optional_fields ~w(reference)a
 
+  @foreign_key_type Ecto.UUID
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "addresses" do
     field :country_code, :string
@@ -12,6 +15,8 @@ defmodule EcommerceCourse.Addresses.Address do
     field :postal_code, :string
     field :reference, :string
     field :street, :string
+
+    belongs_to :user, User
 
     timestamps()
   end
