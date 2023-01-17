@@ -14,10 +14,31 @@ defmodule EcommerceCourseWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :maybe_browser_auth do
+    plug EcommerceCourse.AuthAccessPipeline
+  end
+
   scope "/", EcommerceCourseWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/api/v1", EcommerceCourseWeb do
+    pipe_through([:api])
+
+    post("/login", AuthController, :login)
+    post("/logout", AuthController, :logout)
+  end
+
+  scope "/api/v1", EcommerceCourseWeb do
+    pipe_through([:api, :maybe_browser_auth])
+
+    resources("/items", ItemController, except: [:new, :edit])
+    resources("/users", UserController, except: [:new, :edit])
+    resources("/orders", OrderController, except: [:new, :edit])
+    resources "/contact_info", ContactInfoController, except: [:index, :new, :edit]
+    resources "/carts", CartController, except: [:index, :new, :edit, :update]
   end
 
   # Other scopes may use custom stacks.

@@ -23,7 +23,7 @@ defmodule EcommerceCourse.Users.User do
 
   def update_changeset(user, attrs) do
     user
-    |> cast(attrs, @creation_fields ++ [:last_logged_in])
-    |> validate_required(@creation_fields ++ [:last_logged_in])
+    |> cast(attrs, @creation_fields)
+    |> validate_required(@creation_fields)
   end
 end
