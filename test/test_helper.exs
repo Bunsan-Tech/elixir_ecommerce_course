@@ -1,7 +1,5 @@
-alias EcommerceCourse.Checkout
 alias EcommerceCourse.Items.BulkUpload
 Mimic.copy(BulkUpload)
-Mimic.copy(Checkout)
 
 Faker.start()
 ExUnit.start()
