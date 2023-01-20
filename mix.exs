@@ -57,8 +57,10 @@ defmodule EcommerceCourse.MixProject do
       {:finch, "~> 0.10.2"},
       {:telemetry, "~> 1.0", override: true},
       {:prom_ex, "~> 1.7.1"},
+      # Testing
       {:ex_machina, "~> 2.7.0", only: :test},
-      {:faker, "~> 0.17", only: :test}
+      {:faker, "~> 0.17", only: :test},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
