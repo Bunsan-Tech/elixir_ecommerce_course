@@ -2,6 +2,7 @@ defmodule EcommerceCourse.OrdersTest do
   use EcommerceCourse.DataCase
   import EcommerceCourse.Factory
   import Mock
+  use Mimic
 
   alias EcommerceCourse.{Checkout, Orders}
 
@@ -45,7 +46,7 @@ defmodule EcommerceCourse.OrdersTest do
       end)
     end
 
-    test "with problem on mock checkout" do
+    test "with problem on checkout by mock" do
       with_mock(Checkout,
         submit_order: fn _order, _payment_info -> {:error, %{status: "Phone number required"}} end
       ) do

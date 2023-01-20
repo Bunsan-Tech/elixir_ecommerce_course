@@ -60,7 +60,8 @@ defmodule EcommerceCourse.MixProject do
       # Testing
       {:ex_machina, "~> 2.7.0", only: :test},
       {:faker, "~> 0.17", only: :test},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:mimic, "~> 1.7", only: :test}
     ]
   end
 
