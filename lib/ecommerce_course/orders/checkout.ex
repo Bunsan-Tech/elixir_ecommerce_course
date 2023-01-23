@@ -49,7 +49,7 @@ defmodule EcommerceCourse.Checkout do
     |> Enum.reduce(Multi.new(), fn %{quantity: qty, item: item}, multi ->
       multi
       |> Multi.update(
-        :item,
+        "item-#{item.id}",
         Item.update_changeset(item, %{quantity: item.quantity - qty})
       )
     end)
@@ -87,7 +87,7 @@ defmodule EcommerceCourse.Checkout do
     order_fields = %{
       price: payment_attrs.amount,
       status: "confirmed",
-      delivery_date: NaiveDateTime.add(NaiveDateTime.utc_now(), 2, :day)
+      delivery_date: NaiveDateTime.add(NaiveDateTime.utc_now(), 2, :second)
     }
 
     {order_fields, payment_attrs}
