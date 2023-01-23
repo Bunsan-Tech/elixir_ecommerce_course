@@ -11,6 +11,7 @@ defmodule EcommerceCourse.Orders.Order do
 
   @foreign_key_type Ecto.UUID
   @primary_key {:id, :binary_id, autogenerate: true}
+  @type t() :: %__MODULE__{}
   schema "orders" do
     field :delivery_date, :utc_datetime_usec
     field :location, :string
