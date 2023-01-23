@@ -3,8 +3,9 @@ defmodule EcommerceCourse.Items.BulkUpload do
   Module for upload a huge quantity of items by CSV file
   """
   alias EcommerceCourse.Repo
-  alias EcommerceCourse.Utils
   alias EcommerceCourse.Items.Item
+
+  import EcommerceCourse.ToMap
 
   @extension_file ".csv"
 
@@ -45,7 +46,7 @@ defmodule EcommerceCourse.Items.BulkUpload do
   defp parser_row({:ok, row}) do
     row
     |> build_item_map()
-    |> Utils.transform_string_map()
+    |> to_map()
   end
 
   defp parser_row({_, _}), do: nil

@@ -7,11 +7,12 @@ defmodule EcommerceCourse.Carts do
 
   alias EcommerceCourse.Items
   alias EcommerceCourse.Items.Item
-  alias EcommerceCourse.Utils
   alias EcommerceCourse.Repo
 
   alias EcommerceCourse.Carts.Cart
   alias EcommerceCourse.Carts.{Cart, CartItem}
+
+  import EcommerceCourse.ToMap
 
   @doc """
   Returns the list of carts.
@@ -101,7 +102,7 @@ defmodule EcommerceCourse.Carts do
   iex> add_cart_items(item_id, quantity)
   """
   def add_cart_items(attrs) do
-    attrs = Utils.transform_string_map(attrs)
+    attrs = to_map(attrs)
 
     with {:ok, _message} <- cart_has_order(attrs.cart_id),
          {:ok, %Item{} = item} <- Items.get_one_item(attrs.item_id) do
