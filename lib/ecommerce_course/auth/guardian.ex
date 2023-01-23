@@ -1,4 +1,9 @@
 defmodule EcommerceCourse.Guardian do
+  use Boundary,
+    top_level?: true,
+    deps: [Guardian, EcommerceCourse.Users],
+    exports: [Plug, AuthAccessPipeline]
+
   use Guardian, otp_app: :ecommerce_course
 
   def subject_for_token(%{id: id}, _claims) do

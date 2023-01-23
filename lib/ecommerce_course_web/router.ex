@@ -15,7 +15,7 @@ defmodule EcommerceCourseWeb.Router do
   end
 
   pipeline :maybe_browser_auth do
-    plug EcommerceCourse.AuthAccessPipeline
+    plug EcommerceCourse.Guardian.AuthAccessPipeline
   end
 
   scope "/", EcommerceCourseWeb do

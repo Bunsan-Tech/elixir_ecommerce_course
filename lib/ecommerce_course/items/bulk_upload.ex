@@ -2,6 +2,15 @@ defmodule EcommerceCourse.Items.BulkUpload do
   @moduledoc """
   Module for upload a huge quantity of items by CSV file
   """
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto.UUID,
+      EcommerceCourse,
+      EcommerceCourse.Repo
+    ],
+    exports: []
+
   alias EcommerceCourse.Repo
   alias EcommerceCourse.Items.Item
 

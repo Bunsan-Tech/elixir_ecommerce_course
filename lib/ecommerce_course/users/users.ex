@@ -2,6 +2,16 @@ defmodule EcommerceCourse.Users do
   @moduledoc """
   The Users context.
   """
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto.Multi,
+      Ecto.Query,
+      Ecto.Schema,
+      Ecto.Changeset,
+      EcommerceCourse.Repo
+    ],
+    exports: [User]
 
   import Ecto.Query, warn: false
   alias EcommerceCourse.Repo

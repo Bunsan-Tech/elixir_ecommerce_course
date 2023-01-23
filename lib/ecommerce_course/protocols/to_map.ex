@@ -7,6 +7,11 @@ defmodule EcommerceCourse.Protocols.ToMap do
   @moduledoc """
   Transform data to map
   """
+  use Boundary,
+    top_level?: true,
+    deps: [EcommerceCourse],
+    exports: []
+
   defimpl EcommerceCourse.ToMap, for: [Map, Any] do
     alias EcommerceCourse.ToMap
     alias EcommerceCourse.ToAtom

@@ -2,6 +2,17 @@ defmodule EcommerceCourse.Items do
   @moduledoc """
   The Items context.
   """
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto,
+      Ecto.UUID,
+      Ecto.Query,
+      Ecto.Schema,
+      Ecto.Changeset,
+      EcommerceCourse.Repo
+    ],
+    exports: [Item]
 
   import Ecto.Query, warn: false
   alias Ecto.UUID

@@ -1,4 +1,4 @@
-defmodule EcommerceCourse.ContactInfoFactory do
+defmodule EcommerceCourse.Factory.ContactInfoFactory do
   alias EcommerceCourse.Addresses.Address
   alias EcommerceCourse.Orders.ContactInfo
 

@@ -2,6 +2,20 @@ defmodule EcommerceCourse.Carts do
   @moduledoc """
   The Carts context.
   """
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto,
+      Ecto.UUID,
+      Ecto.Query,
+      Ecto.Schema,
+      Ecto.Changeset,
+      EcommerceCourse,
+      EcommerceCourse.Repo,
+      EcommerceCourse.Items
+    ],
+    exports: [Cart, CartItem]
+
   import Ecto.Query, warn: false
   alias EcommerceCourse.Repo
 

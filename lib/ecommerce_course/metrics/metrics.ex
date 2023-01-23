@@ -1,4 +1,6 @@
-defmodule EcommerceCourse.Metrics.Metrics do
+defmodule EcommerceCourse.Metrics do
+  use Boundary, top_level?: true, deps: [], exports: [Telemetry]
+
   alias EcommerceCourse.Metrics.Telemetry
 
   defmacro __using__(_opts) do

@@ -1,4 +1,21 @@
 defmodule EcommerceCourseWeb do
+  use Boundary,
+    deps: [
+      Phoenix,
+      EcommerceCourse,
+      Ecto.Changeset,
+      Ecto.UUID,
+      EcommerceCourse.{
+        Users,
+        Carts,
+        Guardian,
+        Items,
+        Orders
+      },
+      EcommerceCourse.Orders.Order
+    ],
+    exports: [Endpoint]
+
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.

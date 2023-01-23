@@ -1,4 +1,9 @@
 defmodule EcommerceCourse.AuthErrorHandler do
+  use Boundary,
+    top_level?: true,
+    deps: [Guardian],
+    exports: []
+
   import Plug.Conn
 
   @behaviour Guardian.Plug.ErrorHandler

@@ -2,18 +2,35 @@ defmodule EcommerceCourse.Orders do
   @moduledoc """
   The Orders context.
   """
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto,
+      Ecto.Multi,
+      Ecto.Query,
+      Ecto.Schema,
+      Ecto.Changeset,
+      EcommerceCourse,
+      EcommerceCourse.Repo,
+      EcommerceCourse.Checkout,
+      EcommerceCourse.Metrics,
+      EcommerceCourse.Orders.Order,
+      EcommerceCourse.Addresses.Address
+    ],
+    exports: [ContactInfo, PaymentInfo]
+
+  use EcommerceCourse.Metrics
 
   import Ecto.Query, warn: false
   alias Ecto.Multi
   alias EcommerceCourse.Repo
-  alias EcommerceCourse.Metrics.Metrics
+  alias EcommerceCourse.Metrics
 
   alias EcommerceCourse.Orders.{ContactInfo, Order}
   alias EcommerceCourse.Checkout
   alias EcommerceCourse.Addresses.Address
 
   import EcommerceCourse.ToMap
-  use EcommerceCourse.Metrics.Metrics
 
   @doc """
   Returns the list of orders.

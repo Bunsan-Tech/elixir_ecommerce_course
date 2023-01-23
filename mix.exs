@@ -7,7 +7,7 @@ defmodule EcommerceCourse.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: Mix.compilers(),
+      compilers: [:boundary, :phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -15,7 +15,8 @@ defmodule EcommerceCourse.MixProject do
         flags: [:unmatched_returns, :error_handling, :underspecs, :unknown],
         ignore_warnings: ".dialyzer_ignore.exs",
         list_unused_filters: true
-      ]
+      ],
+      boundary: boundary()
     ]
   end
 
@@ -68,7 +69,8 @@ defmodule EcommerceCourse.MixProject do
       {:mock, "~> 0.3.0", only: :test},
       {:mimic, "~> 1.7", only: :test},
       # Maintainability
-      {:dialyxir, "~> 1.1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.1.0", only: [:dev], runtime: false},
+      {:boundary, "~> 0.9", runtime: false}
     ]
   end
 
@@ -85,6 +87,16 @@ defmodule EcommerceCourse.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": ["esbuild default --minify", "phx.digest"]
+    ]
+  end
+
+  defp boundary do
+    [
+      default: [
+        check: [
+          apps: [:phoenix, :ecto, {:mix, :runtime}]
+        ]
+      ]
     ]
   end
 end

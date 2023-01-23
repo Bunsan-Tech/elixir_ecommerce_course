@@ -1,4 +1,6 @@
 defmodule EcommerceCourse do
+  use Boundary, deps: [], exports: [ToMap]
+
   @moduledoc """
   EcommerceCourse keeps the contexts that define your domain
   and business logic.

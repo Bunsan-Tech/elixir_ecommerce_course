@@ -1,4 +1,4 @@
-defmodule EcommerceCourse.ItemFactory do
+defmodule EcommerceCourse.Factory.ItemFactory do
   alias EcommerceCourse.Items.Item
 
   defmacro __using__(_opts) do

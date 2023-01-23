@@ -1,4 +1,14 @@
 defmodule EcommerceCourse.Orders.Order do
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto,
+      Ecto.Schema,
+      Ecto.Query,
+      Ecto.Changeset
+    ],
+    exports: []
+
   use Ecto.Schema
   import Ecto.Changeset
 

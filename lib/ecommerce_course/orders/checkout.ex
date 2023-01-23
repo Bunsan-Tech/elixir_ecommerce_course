@@ -2,6 +2,14 @@ defmodule EcommerceCourse.Checkout do
   @moduledoc """
   Checkout logic
   """
+  use Boundary,
+    top_level?: true,
+    deps: [
+      Ecto.Multi,
+      EcommerceCourse.Repo,
+      EcommerceCourse.Orders.Order,
+      EcommerceCourse.Items
+    ]
 
   alias Ecto.Multi
   alias EcommerceCourse.Orders.Order

@@ -1,4 +1,8 @@
 defmodule EcommerceCourse.Application do
+  use Boundary,
+    top_level?: true,
+    deps: [EcommerceCourse, EcommerceCourseWeb]
+
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
