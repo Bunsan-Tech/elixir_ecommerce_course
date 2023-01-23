@@ -8,11 +8,11 @@ defmodule EcommerceCourse.Orders do
   alias EcommerceCourse.Repo
   alias EcommerceCourse.Metrics.Metrics
 
-  alias EcommerceCourse.Utils
   alias EcommerceCourse.Orders.{ContactInfo, Order}
   alias EcommerceCourse.Checkout
   alias EcommerceCourse.Addresses.Address
 
+  import EcommerceCourse.ToMap
   use EcommerceCourse.Metrics.Metrics
 
   @doc """
@@ -58,8 +58,8 @@ defmodule EcommerceCourse.Orders do
   """
   def create_order(attrs \\ %{}, payment_info_params) do
     Metrics.count()
-    payment_info = Utils.transform_string_map(payment_info_params)
-    attrs = Utils.transform_string_map(attrs)
+    payment_info = to_map(payment_info_params)
+    attrs = to_map(attrs)
 
     attrs
     |> Order.create_changeset()
@@ -144,7 +144,7 @@ defmodule EcommerceCourse.Orders do
 
   """
   def create_contact_info(attrs \\ %{}, user) do
-    attrs = Utils.transform_string_map(attrs)
+    attrs = to_map(attrs)
     address = Map.put(attrs.address, :user_id, user.id)
 
     Multi.new()
