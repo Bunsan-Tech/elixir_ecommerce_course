@@ -8,6 +8,9 @@ defmodule EcommerceCourse.Checkout do
   alias EcommerceCourse.Items.Item
   alias EcommerceCourse.Repo
 
+  @type payment_map :: %{amount: integer, email: charlist(), last_four: binary()}
+
+  @spec submit_order(%Order{}, map()) :: {:ok, %Order{}} | {:error, String.t()}
   def submit_order(%Order{cart: %{items: []}}, _payment_info) do
     {:error, "Empty cart"}
   end
@@ -19,12 +22,14 @@ defmodule EcommerceCourse.Checkout do
     end
   end
 
+  @spec validate_phone(map()) :: :ok | {:error, String.t()}
   defp validate_phone(%{contact_info: %{phone: phone}}) when is_binary(phone) do
     :ok
   end
 
   defp validate_phone(_order), do: {:error, "Phone number required for checkout"}
 
+  @spec verify_order(%Order{}, map()) :: {:ok, any()} | {:error, String.t()}
   defp verify_order(order, payment) do
     Multi.new()
     |> Multi.update(:order, Order.update_changeset(order, %{status: "in_process"}))
@@ -40,6 +45,7 @@ defmodule EcommerceCourse.Checkout do
     |> Repo.transaction()
   end
 
+  @spec apply_inventory_reductions(map()) :: {:ok, %Item{}} | {:error, String.t()}
   defp apply_inventory_reductions(%{cart: %{items: []}}) do
     {:error, "Cars does not have items"}
   end
@@ -55,6 +61,9 @@ defmodule EcommerceCourse.Checkout do
     end)
   end
 
+  @type credit_cart :: %{payment_method: charlist(), card_number: charlist(), last_four: binary()}
+  @spec save_payment_info(credit_cart, %Order{}) ::
+          {:error, String.t() | Ecto.Changeset.t()}
   defp save_payment_info(
          %{payment_method: "credit_card", card_number: card_number} = payment_info,
          order
@@ -69,6 +78,7 @@ defmodule EcommerceCourse.Checkout do
   defp save_payment_info(_paymet_info, _order),
     do: {:error, "Credit card required for checkout"}
 
+  @spec create_payment_struct(non_neg_integer(), map(), %Order{}) :: map() | {:error, String.t()}
   defp create_payment_struct(16 = _card_lenght, %{card_number: card_number}, %{
          contact_info: %{email: email},
          cart: %{items: items}
@@ -83,6 +93,7 @@ defmodule EcommerceCourse.Checkout do
   defp create_payment_struct(_card_lenght, _payment_info, _order),
     do: {:error, "Please validate card number"}
 
+  @spec set_order_fields(payment_map) :: {any(), payment_map()}
   defp set_order_fields(payment_attrs) do
     order_fields = %{
       price: payment_attrs.amount,

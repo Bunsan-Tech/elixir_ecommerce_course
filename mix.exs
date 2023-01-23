@@ -10,7 +10,12 @@ defmodule EcommerceCourse.MixProject do
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      dialyzer: [
+        flags: [:unmatched_returns, :error_handling, :underspecs, :unknown],
+        ignore_warnings: ".dialyzer_ignore.exs",
+        list_unused_filters: true
+      ]
     ]
   end
 
@@ -61,7 +66,9 @@ defmodule EcommerceCourse.MixProject do
       {:ex_machina, "~> 2.7.0", only: :test},
       {:faker, "~> 0.17", only: :test},
       {:mock, "~> 0.3.0", only: :test},
-      {:mimic, "~> 1.7", only: :test}
+      {:mimic, "~> 1.7", only: :test},
+      # Maintainability
+      {:dialyxir, "~> 1.1.0", only: [:dev], runtime: false}
     ]
   end
 

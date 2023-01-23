@@ -2,7 +2,6 @@ defmodule EcommerceCourse.Carts do
   @moduledoc """
   The Carts context.
   """
-
   import Ecto.Query, warn: false
   alias EcommerceCourse.Repo
 
@@ -23,7 +22,8 @@ defmodule EcommerceCourse.Carts do
       [%Cart{}, ...]
 
   """
-  def list_carts do
+  @spec list_carts() :: [%Cart{}]
+  def(list_carts) do
     Repo.all(Cart)
   end
 
@@ -41,6 +41,7 @@ defmodule EcommerceCourse.Carts do
       ** (Ecto.NoResultsError)
 
   """
+
   def get_cart!(id), do: Repo.get!(Cart, id)
 
   @doc """
