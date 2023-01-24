@@ -2,13 +2,19 @@ defmodule EcommerceCourse.Orders do
   @moduledoc """
   The Orders context.
   """
+  @behaviour EcommerceCourse.Orders.OrderAPI
 
   import Ecto.Query, warn: false
   alias Ecto.Multi
   alias EcommerceCourse.Repo
   alias EcommerceCourse.Metrics.Metrics
 
-  alias EcommerceCourse.Orders.{ContactInfo, Order}
+  alias EcommerceCourse.Orders.{
+    ContactInfo,
+    Order,
+    OrderAPI
+  }
+
   alias EcommerceCourse.Checkout
   alias EcommerceCourse.Addresses.Address
 
@@ -24,6 +30,7 @@ defmodule EcommerceCourse.Orders do
       [%Order{}, ...]
 
   """
+  @impl OrderAPI
   def list_orders do
     Repo.all(Order)
   end
@@ -42,6 +49,7 @@ defmodule EcommerceCourse.Orders do
       ** (Ecto.NoResultsError)
 
   """
+  @impl OrderAPI
   def get_order!(id), do: Repo.get!(Order, id)
 
   @doc """
@@ -56,6 +64,7 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
+  @impl OrderAPI
   def create_order(attrs \\ %{}, payment_info_params) do
     Metrics.count()
     payment_info = to_map(payment_info_params)
@@ -80,6 +89,7 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
+  @impl OrderAPI
   def update_order(%Order{} = order, attrs) do
     order
     |> Order.update_changeset(attrs)
@@ -98,6 +108,7 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
+  @impl OrderAPI
   def delete_order(%Order{} = order) do
     Repo.delete(order)
   end
@@ -111,6 +122,7 @@ defmodule EcommerceCourse.Orders do
       %Ecto.Changeset{data: %Order{}}
 
   """
+  @impl OrderAPI
   def change_order(attrs \\ %{}) do
     Order.create_changeset(attrs)
   end
@@ -129,6 +141,7 @@ defmodule EcommerceCourse.Orders do
       ** (Ecto.NoResultsError)
 
   """
+  @impl OrderAPI
   def get_contact_info!(id), do: Repo.get!(ContactInfo, id)
 
   @doc """
@@ -143,6 +156,7 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
+  @impl OrderAPI
   def create_contact_info(attrs \\ %{}, user) do
     attrs = to_map(attrs)
     address = Map.put(attrs.address, :user_id, user.id)
@@ -177,6 +191,7 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
+  @impl OrderAPI
   def update_contact_info(%ContactInfo{} = contact_info, attrs) do
     contact_info
     |> ContactInfo.update_changeset(attrs)
@@ -195,6 +210,7 @@ defmodule EcommerceCourse.Orders do
       {:error, %Ecto.Changeset{}}
 
   """
+  @impl OrderAPI
   def delete_contact_info(%ContactInfo{} = contact_info) do
     Repo.delete(contact_info)
   end
@@ -208,6 +224,7 @@ defmodule EcommerceCourse.Orders do
       %Ecto.Changeset{data: %ContactInfo{}}
 
   """
+  @impl OrderAPI
   def change_contact_info(attrs \\ %{}) do
     ContactInfo.create_changeset(attrs)
   end

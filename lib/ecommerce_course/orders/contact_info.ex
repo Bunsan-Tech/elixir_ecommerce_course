@@ -4,6 +4,8 @@ defmodule EcommerceCourse.Orders.ContactInfo do
 
   alias EcommerceCourse.Addresses.Address
 
+  @type t() :: %__MODULE__{}
+
   @fields ~w(email phone address_id)a
   @email_address_regex ~r/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
 
